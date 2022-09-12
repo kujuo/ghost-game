@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform player;
-    public float offsetX = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,10 +16,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         Vector3 pos = transform.position;
-        if (pos.x - player.position.x <= offsetX)
-        {
-            pos.x = player.position.x + offsetX;
-        }
+        pos.x = player.position.x;
         transform.position = pos;
     }
 }
