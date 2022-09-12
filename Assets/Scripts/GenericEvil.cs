@@ -5,9 +5,11 @@ using UnityEngine;
 public class GenericEvil : EvilGhost
 {
     public Sprite[] idleFrames;
-    public float animateSpeed;
+    public float animateSpeed = 0.5f;
     public GameObject player;
-    public float speed;
+    public float speed = 0.5f;
+    public float activeDistance;
+    private bool active;
 
     private SpriteRenderer sr;
     
@@ -22,13 +24,16 @@ public class GenericEvil : EvilGhost
     // Update is called once per frame
     void Update()
     {
+        if (!active)
+        {
+            if (Vector3.Distance(transform.position, player.transform.position) < activeDistance) active = true;
+            else return;
+        }
+
         var step = speed * Time.deltaTime; // calculate distance to move
         Vector3 move = Vector3.MoveTowards(transform.position, player.transform.position, step);
         move.y += Random.Range(-step, step);
         transform.position = move;
-        //print(transform.position);
-        //print(player.transform.position);
-        //transform.position = Vector3.Lerp(transform.position, player.transform.position, .1f);
     }
 
     IEnumerator idleAnimate()
