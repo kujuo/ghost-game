@@ -5,4 +5,9 @@ using UnityEngine;
 public abstract class NiceGhosts : MonoBehaviour
 {
     public abstract void ApplySkill();
+
+    private void Update()
+    {
+        ApplySkill();
+    }
 }
