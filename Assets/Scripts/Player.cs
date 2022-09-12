@@ -23,20 +23,21 @@ public class Player : MonoBehaviour
     private int firstIdleFrame;
     private int lastIdleFrame;
     private int currIdleFrame;
-
     private float idleTimer;
+
+    private int hurtFrame;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        //animation
         rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         timer = 1 / fps;
-        // currFrame = 1;
         sr.sprite = frames[0];
 
-        //TEST
         firstRunFrame = 4;
         lastRunFrame = 9;
         currRunFrame = firstRunFrame;
@@ -45,6 +46,8 @@ public class Player : MonoBehaviour
         lastIdleFrame = 3;
         currIdleFrame = 0;
         idleTimer = 5 / fps;
+
+        hurtFrame = 10;
     }
 
     // Update is called once per frame
@@ -58,11 +61,10 @@ public class Player : MonoBehaviour
 
         //left-right animation
         if (Mathf.Abs(inputX) > 0) WalkAnimation();
-        //else sr.sprite = frames[0];
         else IdleAnimation();
 
         //jump
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && vel.y == 0)
         {
             rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
@@ -79,7 +81,14 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("I lost health.");
+        sr.sprite = frames[hurtFrame];
     }
+    
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        sr.sprite = frames[firstIdleFrame];
+    }
+    
 
     void WalkAnimation()
     {
