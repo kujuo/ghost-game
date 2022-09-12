@@ -20,6 +20,7 @@ public class Shooty : NiceGhosts
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            transform.position = transform.position + new Vector3(10, 0, 0) * 0.5f;
             StartCoroutine(Shoot());
         }
     }
@@ -34,6 +35,7 @@ public class Shooty : NiceGhosts
             yield return new WaitForSeconds(timer);
         }
         Instantiate(hearts, transform.position + Vector3.right, Quaternion.identity);
+        transform.position = transform.position + new Vector3(-10, 0, 0) * 0.5f;
     }
 
 }
