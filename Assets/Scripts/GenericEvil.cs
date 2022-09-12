@@ -5,6 +5,7 @@ using UnityEngine;
 public class GenericEvil : EvilGhost
 {
     public Sprite[] idleFrames;
+    public Sprite[] rightFrames;
     public float animateSpeed = 0.5f;
     public GameObject player;
     public float speed = 0.5f;
@@ -17,7 +18,7 @@ public class GenericEvil : EvilGhost
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        StartCoroutine(idleAnimate());
+        StartCoroutine(animate(idleFrames));
         player = GameObject.Find("player");
     }
 
@@ -26,25 +27,48 @@ public class GenericEvil : EvilGhost
     {
         if (!active)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) < activeDistance) active = true;
+            if (Vector3.Distance(transform.position, player.transform.position) < activeDistance)
+            {
+                active = true;
+                StopAllCoroutines();
+                sr.flipX = false;
+                StartCoroutine(animate(rightFrames));
+            }
+
             else return;
         }
 
+
         var step = speed * Time.deltaTime; // calculate distance to move
         Vector3 move = Vector3.MoveTowards(transform.position, player.transform.position, step);
-        move.y += Random.Range(-step, step);
         transform.position = move;
+
+        Vector3 sub = player.transform.position - move;
+        if (sub.x > 0 && sr.flipX != false)
+        {
+            sr.flipX = false;
+            StopAllCoroutines();
+            StartCoroutine(animate(rightFrames));
+        }
+        else if (sub.x < 0 && sr.flipX == false)
+        {
+            sr.flipX = true;
+            StopCoroutine("animate");
+            StartCoroutine(animate(rightFrames));
+        }
     }
 
-    IEnumerator idleAnimate()
+    IEnumerator animate(Sprite[] frames)
     {
         int frame = 0;
         while (true)
         {
-            if (frame >= idleFrames.Length) frame = 0;
-            sr.sprite = idleFrames[frame];
+            if (frame >= frames.Length) frame = 0;
+            sr.sprite = frames[frame];
             frame++;
             yield return new WaitForSeconds(animateSpeed);
         }
     }
+
+
 }

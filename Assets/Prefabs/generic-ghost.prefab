@@ -118,7 +118,11 @@ MonoBehaviour:
   - {fileID: -1223243175, guid: 73345ebc3cdf2463f80d0eaf95e346cf, type: 3}
   - {fileID: -992139843, guid: 73345ebc3cdf2463f80d0eaf95e346cf, type: 3}
   - {fileID: 1165353313, guid: 73345ebc3cdf2463f80d0eaf95e346cf, type: 3}
+  rightFrames:
+  - {fileID: 1659887847, guid: 73345ebc3cdf2463f80d0eaf95e346cf, type: 3}
+  - {fileID: 1829452044, guid: 73345ebc3cdf2463f80d0eaf95e346cf, type: 3}
+  - {fileID: 997343225, guid: 73345ebc3cdf2463f80d0eaf95e346cf, type: 3}
   animateSpeed: 0.5
   player: {fileID: 0}
-  speed: 0.5
+  speed: 1
   activeDistance: 5
