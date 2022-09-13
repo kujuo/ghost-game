@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Spikes : MonoBehaviour
 {
@@ -9,8 +10,7 @@ public class Spikes : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             Player player = col.GetComponent<Player>();
-            player.onDeath();
-            Destroy(GameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

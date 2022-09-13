@@ -10,6 +10,10 @@ public class Shooty : NiceGhosts
     public float framesPerSecond;
     private float timer = 1;
     SpriteRenderer sr;
+    private float currentCharge = 100;
+    private float chargeIncrease = 10;
+    private float chargeDecrease = 20;
+    private float coolDownTime = 1;
 
     void Start()
     {
@@ -35,7 +39,14 @@ public class Shooty : NiceGhosts
             yield return new WaitForSeconds(timer);
         }
         Instantiate(hearts, transform.position + Vector3.right, Quaternion.identity);
+        currentCharge -= chargeDecrease;
         transform.position = transform.position + new Vector3(-10, 0, 0) * 0.5f;
+    }
+
+    private IEnumerator coolDown()
+    {
+        yield return new WaitForSeconds(coolDownTime);
+        currentCharge += chargeIncrease;
     }
 
 }
