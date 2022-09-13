@@ -124,6 +124,10 @@ MonoBehaviour:
   speed: 3
   jumpForce: 5
   hp: 100
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  recoil: 20
   frames:
   - {fileID: -2062098106, guid: b34bcc3663d814ac8b72e5482fe40d89, type: 3}
   - {fileID: -291279585, guid: b34bcc3663d814ac8b72e5482fe40d89, type: 3}

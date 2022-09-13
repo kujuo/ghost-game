@@ -13,8 +13,8 @@ public class Player : MonoBehaviour
     public float jumpForce = 3;
 
     public float hp = 100;
-
     public LayerMask groundMask;
+    public float recoil = 10;
 
     //animation variables
 
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
         Vector3 vel = rb2D.velocity;
         float inputX = Input.GetAxisRaw("Horizontal");
         vel.x = speed * inputX;
-        rb2D.velocity = vel;
+        if(!hurt) rb2D.velocity = vel;
 
         //face in direction
         if (inputX >= 0) sr.flipX = false;
@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
         //check health
         if (hp <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            RestartGame();
         }
         else if(hp <= 20)
         {
@@ -97,6 +97,12 @@ public class Player : MonoBehaviour
             bkgrdsr.color = new Color(1, 0, 0);
         }
 
+    }
+
+    //restart game
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 
@@ -120,17 +126,37 @@ public class Player : MonoBehaviour
 
     // on triggers
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        hurt = true;
-        hp -= 20;
-        Debug.Log("I lost health. Current health: " + hp);
-        sr.sprite = frames[hurtFrame];
+        if(other.gameObject.CompareTag("Evil Ghost"))
+        {
+            hurt = true;
+            hp -= 20;
+            Debug.Log("I lost health. Current health: " + hp);
+            sr.sprite = frames[hurtFrame];
 
-        // jump backwards
-        Vector3 dir = collision.transform.position - transform.position;
-        if (dir.x >= 0) transform.position += Vector3.left;
-        else transform.position += Vector3.right;
+            // jump backwards
+            Vector3 dir = other.transform.position - transform.position;
+            if (dir.x >= 0)
+            {
+                rb2D.AddForce(Vector2.left * recoil, ForceMode2D.Impulse);
+            }
+            else
+            {
+                rb2D.AddForce(Vector2.right * recoil, ForceMode2D.Impulse);
+            }
+
+        }
+        else if (other.gameObject.CompareTag("Pumpkin"))
+        {
+            Debug.Log("Found a pumpkin!");
+            hp += 20;
+            Destroy(other.gameObject);
+            Debug.Log("I regained health. Current health: " + hp);
+        }
+
+
+
     }
     
     
