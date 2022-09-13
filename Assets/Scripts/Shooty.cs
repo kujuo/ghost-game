@@ -24,7 +24,7 @@ public class Shooty : NiceGhosts
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            transform.position = transform.position + new Vector3(10, 0, 0) * 0.5f;
+            transform.position = transform.position + new Vector3(3, 0, 0) * 0.5f;
             StartCoroutine(Shoot());
         }
     }
@@ -40,7 +40,7 @@ public class Shooty : NiceGhosts
         }
         Instantiate(hearts, transform.position + Vector3.right, Quaternion.identity);
         currentCharge -= chargeDecrease;
-        transform.position = transform.position + new Vector3(-10, 0, 0) * 0.5f;
+        transform.position = transform.position + new Vector3(-3, 0, 0) * 0.5f;
     }
 
     private IEnumerator coolDown()
