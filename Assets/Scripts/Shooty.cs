@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
@@ -8,16 +9,22 @@ public class Shooty : NiceGhosts
     public GameObject hearts;
     public Sprite[] attackSprites;
     public float framesPerSecond;
-    private float timer = 1;
+    public float timer = 1f;
     SpriteRenderer sr;
-    private float currentCharge = 100;
-    private float chargeIncrease = 10;
-    private float chargeDecrease = 20;
-    private float coolDownTime = 1;
+    public float currentCharge = 100f;
+    public float chargeIncrease = 10f;
+    public float chargeDecrease = 20f;
+    public float coolDownTime = 1f;
+    public Sprite leftTurnShooty;
 
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        shootyTurn();
     }
 
     public override void ApplySkill()
@@ -45,8 +52,23 @@ public class Shooty : NiceGhosts
 
     private IEnumerator coolDown()
     {
-        yield return new WaitForSeconds(coolDownTime);
-        currentCharge += chargeIncrease;
+        if (currentCharge < 100) {
+
+            yield return new WaitForSeconds(coolDownTime);
+            currentCharge += chargeIncrease;
+        }
     }
 
+   private void shootyTurn()
+    {
+        SpriteRenderer parentSR = GetComponentInParent<SpriteRenderer>();
+        if (parentSR.flipX == true)
+        {
+            sr.flipX = false;
+            sr.sprite = leftTurnShooty;
+        }
+        else
+            sr.flipX = true;
+            sr.sprite = leftTurnShooty;
+    }
 }
