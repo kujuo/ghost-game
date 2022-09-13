@@ -52,8 +52,9 @@ public class TextWriter : MonoBehaviour
                 {
                     timer += timePerCharacter;
                     characterIndex++;
-                    uiText.transform.TransformPoint(obj.transform.position + new Vector3(10,-5, 0));
-                    uiText.transform.position = obj.transform.position + new Vector3(10, -5, 0);
+                    Vector3 vector = new Vector3(0, -3, 0);
+                    uiText.transform.TransformPoint(obj.transform.position);
+                    uiText.transform.position = obj.transform.position;
                     uiText.text = textToWrite.Substring(0, characterIndex);
                     if (characterIndex >= textToWrite.Length)
                     {

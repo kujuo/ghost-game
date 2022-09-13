@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 808090571004982392}
   - component: {fileID: 808090571004982389}
   - component: {fileID: 808090571004982390}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -121,12 +121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86cf91509faf744d584dd1fb38a29f29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  jumpForce: 5
+  speed: 5
+  jumpForce: 10
   hp: 100
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   recoil: 20
   frames:
   - {fileID: -2062098106, guid: b34bcc3663d814ac8b72e5482fe40d89, type: 3}

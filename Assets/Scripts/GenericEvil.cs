@@ -11,6 +11,7 @@ public class GenericEvil : EvilGhost
     public float speed = 0.5f;
     public float activeDistance;
     private bool active;
+    Coroutine nyah;
 
     private SpriteRenderer sr;
     
@@ -18,7 +19,7 @@ public class GenericEvil : EvilGhost
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        StartCoroutine(animate(idleFrames));
+        nyah = StartCoroutine(animate(idleFrames));
         player = GameObject.Find("player");
     }
 
@@ -30,11 +31,10 @@ public class GenericEvil : EvilGhost
             if (Vector3.Distance(transform.position, player.transform.position) < activeDistance)
             {
                 active = true;
-                StopCoroutine("animate");
+                StopCoroutine(nyah);
                 sr.flipX = false;
-                StartCoroutine(animate(rightFrames));
+                nyah = StartCoroutine(animate(rightFrames));
             }
-
             else return;
         }
 
@@ -47,14 +47,14 @@ public class GenericEvil : EvilGhost
         if (sub.x > 0 && sr.flipX != false)
         {
             sr.flipX = false;
-            StopCoroutine("animate");
-            StartCoroutine(animate(rightFrames));
+            StopCoroutine(nyah);
+            nyah= StartCoroutine(animate(rightFrames));
         }
         else if (sub.x < 0 && sr.flipX == false)
         {
             sr.flipX = true;
-            StopCoroutine("animate");
-            StartCoroutine(animate(rightFrames));
+            StopCoroutine(nyah);
+            nyah = StartCoroutine(animate(rightFrames));
         }
     }
 
