@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Evil Ghost
+  - Nice Ghost
   layers:
   - Default
   - TransparentFX
