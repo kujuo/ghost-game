@@ -150,7 +150,8 @@ public class Player : MonoBehaviour
         else if (other.gameObject.CompareTag("Pumpkin"))
         {
             Debug.Log("Found a pumpkin!");
-            hp += 20;
+            if (hp >= 80) { hp = 100; }
+            else { hp += 20; }
             Destroy(other.gameObject);
             Debug.Log("I regained health. Current health: " + hp);
         }
