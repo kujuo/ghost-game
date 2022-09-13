@@ -15,6 +15,7 @@ public class Hearts : MonoBehaviour
     public Sprite[] attackSprites;
     SpriteRenderer sr;
     public float framesPerSecond;
+    public float damage = 20;
 
 
     // Start is called before the first frame update
@@ -23,7 +24,7 @@ public class Hearts : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         // normalize direction so it does not impact the travel speed
         direction.Normalize();
-        // make the projectile rotate into the direction it is moving, math will be addressed in lecture 2
+        // make the projectile rotate into the direction it is moving
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         StartCoroutine(ShootHearts());
@@ -34,11 +35,6 @@ public class Hearts : MonoBehaviour
     void Update()
     {
         transform.position += new Vector3(direction.x, direction.y, 0) * speed * Time.deltaTime;
-
-        //lifeTime -= Time.deltaTime;
-        //if (lifeTime <= 0)
-        //{
-        //}
     }
 
     private IEnumerator ShootHearts()
@@ -50,18 +46,18 @@ public class Hearts : MonoBehaviour
             yield return new WaitForSeconds(lifeTime);
         }
         Destroy(gameObject);
+    }
 
         /// <summary>
         /// This is called by Unity when the object collides with another object. It is only called, when both objects have any 2D Collider attached, none them is a trigger and at least one of
         /// the two colliding GameObjects has a Rigidbody2D attached. If one of the two 2D Colliders is a trigger, OnTriggerEnter2D(Collider other) is called instead. 
-        //void OnCollisionEnter2D(Collision2D col)
-        //{
-        //if (col.gameObject.CompareTag("Evil Ghost"))
-        //    { // This checks if we hit the evil ghost. The evil ghost needs the "Evil Ghost" tag for this to work!!
-        //        EvilGhost evilGhost = col.gameObject.GetComponent<EvilGhost>(); // Grab the asteroid script from the hit GameObject
-        //        EvilGhost.OnHit(); // notify the evil ghost it got hit
-        //        Destroy(gameObject); // Destory this projectile
-        //    }
-        //}
-    }
-}
+     void OnTriggerEnter2D(Collider2D col)
+    {
+            if (col.gameObject.CompareTag("Evil Ghost"))
+            { // This checks if we hit the evil ghost. The evil ghost needs the "Evil Ghost" tag for this to work
+                EvilGhost evilGhost = col.gameObject.GetComponent<EvilGhost>(); // Grab the evil ghost script
+                evilGhost.loseHealth(damage); // notify the evil ghost it got hit (loseHealth should be reducing evil ghost health)
+                Destroy(gameObject); // Destory this projectile
+            }
+        }
+ }
