@@ -108,9 +108,3 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 144fb93d4e13b4001b62d1246f712dc4, type: 3}
   - {fileID: 21300000, guid: c38b0f0deafe64cd690fb870d418108d, type: 3}
   framesPerSecond: 20
-  timer: 1
-  currentCharge: 100
-  chargeIncrease: 10
-  chargeDecrease: 20
-  coolDownTime: 1
-  leftTurnShooty: {fileID: 21300000, guid: 065f4c505784245a9969c0f498a8d193, type: 3}
