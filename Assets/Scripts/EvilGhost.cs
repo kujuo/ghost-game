@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EvilGhost : MonoBehaviour
+public abstract class EvilGhost : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float health;
+    void loseHealth(float damage)
     {
-        
+        health -= damage;
+        if (health <= 0)
+        {
+            onDeath();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void onDeath();
 }

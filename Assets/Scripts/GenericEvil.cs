@@ -30,7 +30,7 @@ public class GenericEvil : EvilGhost
             if (Vector3.Distance(transform.position, player.transform.position) < activeDistance)
             {
                 active = true;
-                StopAllCoroutines();
+                StopCoroutine("animate");
                 sr.flipX = false;
                 StartCoroutine(animate(rightFrames));
             }
@@ -47,7 +47,7 @@ public class GenericEvil : EvilGhost
         if (sub.x > 0 && sr.flipX != false)
         {
             sr.flipX = false;
-            StopAllCoroutines();
+            StopCoroutine("animate");
             StartCoroutine(animate(rightFrames));
         }
         else if (sub.x < 0 && sr.flipX == false)
@@ -68,6 +68,11 @@ public class GenericEvil : EvilGhost
             frame++;
             yield return new WaitForSeconds(animateSpeed);
         }
+    }
+
+    public override void onDeath()
+    {
+        Destroy(this.gameObject);
     }
 
 
